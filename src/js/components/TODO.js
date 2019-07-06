@@ -15,31 +15,44 @@ function addList() {
 
             var remove=document.createElement('button');
             remove.innerHTML="Remove";
-            remove.addEventListener ("click", function() {
-                console.log(i);
-                store.todo.splice(i, 1);
+            remove.value= i;
+            remove.addEventListener ("click", function(event) {
+                console.log();
+                let index = event.target.value;
+                store.todo.splice(index, 1);
+                ul.innerHTML = "";
+                remove(index);
             });
             ul.appendChild(remove);
             if(store.todo.isDone) {
                 var unDone=document.createElement('button');
                 unDone.innerHTML="UnDone";
-                unDone.addEventListener ("click", function() {
+                unDone.value= i;
+                unDone.addEventListener ("click", function(event) {
                     console.log("Index", i);
-                    store.todo[i].isDone = false;
+                    let index = event.target.value;
+                    store.todo[index].isDone = false;
                 });
                 ul.appendChild(unDone);
             } else {
                 var done=document.createElement('button');
                 done.innerHTML="Done";
-                done.index= i;
-                done.addEventListener ("click", function($event) {
-                    console.log("index",i);
-                    console.log("Index ", store.todo[i]);
-                    store.todo[i].isDone = true;
+                done.value= i;
+                done.addEventListener ("click", function(event) {
+                    let index = event.target.value;
+                    console.log("Index ", store.todo[index]);
+                    store.todo[index].isDone = true;
                 });
                 ul.appendChild(done);
             }
             ul.appendChild(li);
             li.innerHTML=li.innerHTML + store.todo[i].text;
         }
+}
+function remove(index) {
+    for (var j=0; j<store.todo.length; j++){
+        var l=document.createElement('li');
+        ul.appendChild(l);
+        l.innerHTML=l.innerHTML + store.todo[j].text;
+    }
 }
